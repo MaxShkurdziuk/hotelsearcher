@@ -1,6 +1,6 @@
 @extends('start')
 
-@section('Title', 'Sign Up')
+@section('title', 'Sign Up')
 
 @section('content')
     <div>

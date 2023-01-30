@@ -44,7 +44,7 @@ class MainController extends Controller
         }
 
         $hotels = $query
-            ->paginate(5)
+            ->paginate(3)
             ->appends($request->query());
 
         $services = Service::all();

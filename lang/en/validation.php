@@ -181,13 +181,15 @@ return [
         'phone' => 'Mobile phone',
         'text' => 'Message',
         'open_year' => 'Open year',
-        'description' => 'Hotel description',
+        'description' => 'Description',
         'country' => 'Hotel country',
         'city' => 'City',
         'stars' => 'Hotel stars',
         'password' => 'Password',
         'password_confirmation' => 'Confirm Password',
         'services' => 'Services',
+        'rating' => 'Rating',
+        'reviews' => 'Reviews',
     ],
 
 ];

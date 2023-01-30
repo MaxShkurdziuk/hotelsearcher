@@ -1,6 +1,6 @@
 @extends('start')
 
-@section('Title', 'Show hotel')
+@section('title', 'Show hotel')
 
 @section('content')
     <div class="w-100 row g-3">
@@ -13,4 +13,8 @@
         </p>
         <p>{!! nl2br(strip_tags($hotel->description)) !!}</p>
     </div>
+    <div class="w-100 row g-3 mt-3 mb-2">
+        <h4>Write a review about this hotel</h4>
+    </div>
+    @yield('review')
 @endsection

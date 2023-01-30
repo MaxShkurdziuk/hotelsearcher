@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\HotelObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,13 @@ class Hotel extends Model
         'updated_at',
     ];
 
+    public static function boot(): void
+    {
+        parent::boot();
+
+        self::observe(HotelObserver::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -31,5 +39,10 @@ class Hotel extends Model
     public function services()
     {
         return $this->belongsToMany(Service::class, 'hotel_services');
+    }
+
+    public function reviews()
+    {
+        return $this->belongsToMany(Review::class, 'hotel_reviews');
     }
 }

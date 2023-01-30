@@ -4,9 +4,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Models\Hotel;
+use App\Models\Review;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +30,7 @@ Route::get('/about-us', [MainController::class, 'about'])->name('about');
 Route::get('/contact-us', [MessageController::class, 'show'])->name('contact');
 Route::post('/contact-us', [MessageController::class, 'store'])->name('contact_store');
 
-Route::group(['prefix' => '/hotels', 'as' => 'hotels.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/hotels', 'as' => 'hotels.', 'middleware' => ['auth', 'user-verify']], function () {
     Route::get('/add', [HotelController::class, 'addHotel'])->name('add.hotel')->middleware('can:create,' . Hotel::class);
     Route::post('/add', [HotelController::class, 'add'])->name('add')->middleware('can:create,' . Hotel::class);;
     Route::get('', [HotelController::class, 'list'])->name('list');
@@ -53,6 +55,14 @@ Route::group(['prefix' => '/services', 'as' => 'services.', 'middleware' => 'aut
     });
     Route::get('/{service}', [ServiceController::class, 'show'])->name('show');
     Route::post('/{service}/delete', [ServiceController::class, 'delete'])->name('delete');
+});
+
+Route::group(['prefix' => '/reviews', 'as' => 'reviews.'], function () {
+    Route::get('/add', [ReviewController::class, 'addReview'])->name('add.review');
+    Route::post('/add', [ReviewController::class, 'add'])->name('add');
+    Route::get('', [ReviewController::class, 'list'])->name('list');
+
+    Route::get('/{review}', [ReviewController::class, 'show'])->name('show');
 });
 
 Route::get('/sign-up', [UserController::class, 'signUpForm'])->name('sign-up.form');

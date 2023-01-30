@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Hotel\CreateRequest;
 use App\Http\Requests\Hotel\EditRequest;
+use App\Models\Review;
 use App\Models\Service;
+use App\Services\HotelService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
 {
+    public function __construct(private HotelService $hotelService)
+    {
+    }
+
     public function addHotel()
     {
         $services = Service::all();
@@ -36,10 +42,7 @@ class HotelController extends Controller
     public function add(CreateRequest $request)
     {
         $data = $request->validated();
-        $hotel = new Hotel($data);
-
-        $hotel->save();
-        $hotel->services()->attach($data['services']);
+        $hotel = $this->hotelService->create($data);
 
         session()->flash('success', 'Hotel added successfully!');
         return redirect()->route('hotels.show', ['hotel' => $hotel->id]);
@@ -48,9 +51,7 @@ class HotelController extends Controller
     public function edit(Hotel $hotel, EditRequest $request)
     {
         $data = $request->validated();
-        $hotel->fill($data);
-        $hotel->services()->sync($data['services']);
-        $hotel->save();
+        $this->hotelService->edit($hotel, $data);
 
         session()->flash('success', 'Hotel edited successfully!');
 
@@ -59,13 +60,20 @@ class HotelController extends Controller
 
     public function list(Request $request)
     {
-        $hotels = Hotel::query()->paginate(4);
+        $hotels = Hotel::query()->paginate(7);
 
         return view('hotels.list', ['hotels' => $hotels]);
     }
 
-    public function show(Hotel $hotel)
+    public function show(Hotel $hotel, Review $review)
     {
-        return view('hotels.show', compact('hotel'));
+        return view('reviews.add', compact('hotel', 'review'));
+    }
+
+    public function reviewsList(Request $request)
+    {
+        $reviews = Review::query()->paginate(7);
+
+        return view('hotels.list', ['reviews' => $reviews]);
     }
 }

@@ -51,7 +51,7 @@ class ServiceController extends Controller
 
     public function list(Request $request)
     {
-        $services = Service::query()->paginate(3);
+        $services = Service::query()->paginate(5);
 
         return view('services.list', ['services' => $services]);
     }

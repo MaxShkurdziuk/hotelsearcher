@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function __construct(private UserService $userService)
+    {
+    }
+
     public function signUpForm()
     {
         return view('sign-up');
@@ -21,10 +25,7 @@ class UserController extends Controller
     public function signUp(SignUpRequest $request)
     {
         $data = $request->validated();
-        $user = new User($data);
-        $user->save();
-
-        Mail::to($user)->send(new EmailConfirm($user));
+        $this->userService->register($data);
 
         session()->flash('success', 'Success!');
 
