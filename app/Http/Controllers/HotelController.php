@@ -65,15 +65,10 @@ class HotelController extends Controller
         return view('hotels.list', ['hotels' => $hotels]);
     }
 
-    public function show(Hotel $hotel, Review $review)
+    public function show(Hotel $hotel)
     {
-        return view('reviews.add', compact('hotel', 'review'));
-    }
+        $reviews = Review::query()->where('hotel_id', $hotel->id)->get();
 
-    public function reviewsList(Request $request)
-    {
-        $reviews = Review::query()->paginate(7);
-
-        return view('hotels.list', ['reviews' => $reviews]);
+        return view('reviews.add', compact('hotel', 'reviews'));
     }
 }

@@ -15,6 +15,13 @@
     </div>
     <div class="w-100 row g-3 mt-3 mb-2">
         <h4>Write a review about this hotel</h4>
+        @yield('review')
     </div>
-    @yield('review')
+    <div class="w-100 row g-3 p-2">
+        <h5>Reviews</h5>
+        @foreach($reviews as $review)
+            <h6> {{ $review->user->name }} (Rating: {{ $review->rating }})</h6>
+            <p class="m-0">{!! nl2br(strip_tags($review->description)) !!}</p>
+        @endforeach
+    </div>
 @endsection

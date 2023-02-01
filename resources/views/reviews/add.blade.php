@@ -5,14 +5,7 @@
         <form action="{{ route('reviews.add') }}" method="post">
             @csrf
             <div class="w-50 row g-3">
-                <div class="col-sm-7">
-                    <label for="name">{{ __('validation.attributes.name') }}</label>
-                    <input value="{{ old('name') }}" placeholder="Your name..." type="text" name="name"
-                           class="form-control @error('name') is-invalid @enderror">
-                    @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <input type="hidden" name="hotel" value="{{ $hotel->id }}"/>
 
                 <div class="col-sm-2">
                     <label for="rating">{{ __('validation.attributes.rating') }}</label>

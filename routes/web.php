@@ -63,6 +63,7 @@ Route::group(['prefix' => '/reviews', 'as' => 'reviews.'], function () {
     Route::get('', [ReviewController::class, 'list'])->name('list');
 
     Route::get('/{review}', [ReviewController::class, 'show'])->name('show');
+    Route::post('/{review}/delete', [ReviewController::class, 'delete'])->name('delete');
 });
 
 Route::get('/sign-up', [UserController::class, 'signUpForm'])->name('sign-up.form');

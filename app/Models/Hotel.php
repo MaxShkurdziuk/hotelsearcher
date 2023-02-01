@@ -40,9 +40,4 @@ class Hotel extends Model
     {
         return $this->belongsToMany(Service::class, 'hotel_services');
     }
-
-    public function reviews()
-    {
-        return $this->belongsToMany(Review::class, 'hotel_reviews');
-    }
 }

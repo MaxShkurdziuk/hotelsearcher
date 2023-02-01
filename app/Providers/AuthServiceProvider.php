@@ -4,8 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Hotel;
+use App\Models\Review;
 use App\Models\Service;
 use App\Policies\HotelPolicy;
+use App\Policies\ReviewPolicy;
 use App\Policies\ServicePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Hotel::class => HotelPolicy::class,
         Service::class => ServicePolicy::class,
+        Review::class => ReviewPolicy::class,
     ];
 
     /**
